@@ -8,15 +8,15 @@
   Windows Server + Hyper-V hosts: collect local facts, flag exceptions,
   write a dated log, and optionally email a short summary.
 
-  This is a SAMPLE. Client names, host names, thresholds, and mail settings
+  This is a SAMPLE. Organization names, host names, thresholds, and mail settings
   are fictional or parameterized. Do not run against production without
   review. No secrets are stored in this file.
 
 .NOTES
   Author : Sean Rector (sample / sanitized)
-  Intent : Documentation + automation sample for MSP-style operations
+  Intent : Documentation + automation sample for in-house infrastructure operations
   Scope  : Local host checks (disk, services, Hyper-V VM state, optional cluster)
-  Non-goals: Not an RMM replacement. Not a backup product integration.
+  Non-goals: Not a monitoring platform replacement. Not a backup product integration.
 #>
 
 [CmdletBinding()]
@@ -24,7 +24,7 @@ param(
     [int]    $DiskWarnPercent   = 15,
     [int]    $DiskCritPercent   = 8,
     [string] $LogDirectory      = 'C:\ProgramData\OpsHealth\Logs',
-    [string] $ClientName        = 'Lakeside Professional Group',
+    [string] $OrgName        = 'Lakeside Professional Group',
     [string] $SiteCode          = 'LPG-DC1',
     [string[]] $WatchServices   = @('WinRM', 'EventLog', 'LanmanServer', 'vmms'),
     [switch] $SendEmail,
@@ -151,7 +151,7 @@ $stamp   = Get-Date -Format 'yyyyMMdd-HHmmss'
 $hostName = $env:COMPUTERNAME
 
 $findings = @()
-$findings += New-HealthItem -Status 'INFO' -Check 'Context' -Detail ("{0} / {1} / {2}" -f $ClientName, $SiteCode, $hostName)
+$findings += New-HealthItem -Status 'INFO' -Check 'Context' -Detail ("{0} / {1} / {2}" -f $OrgName, $SiteCode, $hostName)
 $findings += Get-DiskFindings
 $findings += Get-ServiceFindings
 $findings += Get-HyperVFindings
@@ -162,7 +162,7 @@ $warn = @($findings | Where-Object Status -eq 'WARN')
 $exitCode = if ($crit.Count) { 2 } elseif ($warn.Count) { 1 } else { 0 }
 
 $summary = [pscustomobject]@{
-    Client    = $ClientName
+    Org       = $OrgName
     Site      = $SiteCode
     Host      = $hostName
     When      = (Get-Date).ToString('s')
@@ -177,12 +177,12 @@ $logPath = Join-Path $LogDirectory ("Health-{0}-{1}.json" -f $hostName, $stamp)
     Findings = $findings
 } | ConvertTo-Json -Depth 5 | Set-Content -Path $logPath -Encoding UTF8
 
-Write-Host ("Health check {0} {1} — CRIT={2} WARN={3}  Log={4}" -f $ClientName, $hostName, $crit.Count, $warn.Count, $logPath)
+Write-Host ("Health check {0} {1} - CRIT={2} WARN={3}  Log={4}" -f $OrgName, $hostName, $crit.Count, $warn.Count, $logPath)
 $findings | Sort-Object @{Expression = { switch ($_.Status) { 'CRIT' {0} 'WARN' {1} 'OK' {2} default {3} } }}, Check |
     Format-Table Status, Check, Detail -AutoSize
 
 if ($SendEmail) {
-    $subject = '[{0}] {1} {2} health: {3} crit / {4} warn' -f $SiteCode, $ClientName, $hostName, $crit.Count, $warn.Count
+    $subject = '[{0}] {1} {2} health: {3} crit / {4} warn' -f $SiteCode, $OrgName, $hostName, $crit.Count, $warn.Count
     $body = $findings | Format-Table Status, Check, Detail -AutoSize | Out-String
     Send-MailMessage -From $MailFrom -To $MailTo -Subject $subject -Body $body -SmtpServer $SmtpServer
 }
