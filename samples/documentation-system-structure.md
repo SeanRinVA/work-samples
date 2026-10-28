@@ -19,7 +19,7 @@ One Organization record for the company. Locations under it. Everything else rel
 | Configurations | Servers, firewalls, switches, APs, UPS, workstations of record | LPG-HV01 (Hyper-V host) |
 | Asset records | Repeatable stacks: M365, backup, antivirus, ISP, licensing | M365 tenant summary; backup schedule |
 | Passwords | Vaulted secrets with owner + rotation notes, never in a document body | Domain Admin (break-glass) |
-| Documents | SOPs, runbooks, diagrams, change history | SOP-LPG-004 Hyper-V VM unavailable |
+| Documents | SOPs, runbooks, diagrams, change history | SOP-INF-004 Hyper-V VM unavailable |
 | Related items | Links between configs, docs, assets, and contacts | HV01 related to backup FA + runbook |
 
 ## Asset record set for day one
