@@ -10,6 +10,7 @@ All content is fictionalized or generalized. No real organization data, credenti
 - **Method-first troubleshooting:** isolate guest vs host vs DNS vs site before changing anything
 - **Operational automation:** scheduled health checks that log exceptions instead of hoping someone notices
 - **Clear communication:** escalation summaries and user-facing updates written for action
+- **Process discipline:** a version-controlled way to keep claims honest and decisions consistent
 
 ## Samples
 
@@ -20,6 +21,12 @@ All content is fictionalized or generalized. No real organization data, credenti
 | [`samples/documentation-system-structure.md`](samples/documentation-system-structure.md) | How I organize internal IT documentation in a central system of record |
 | [`samples/sop-inf-004-hyperv-vm-unavailable.md`](samples/sop-inf-004-hyperv-vm-unavailable.md) | Incident runbook: Hyper-V guest unavailable (guest vs host vs storage vs DNS) |
 | [`samples/invoke-windows-healthcheck.ps1`](samples/invoke-windows-healthcheck.ps1) | Scheduled Windows / Hyper-V health check (disk, services, VM state, optional cluster, JSON log, optional email) |
+
+### Process and operating systems
+
+| File | Purpose |
+|------|---------|
+| [`samples/job-search-system/README.md`](samples/job-search-system/README.md) | Version-controlled job search operating system (sanitized): decision table, claim boundaries, pre-build gate, tracker validator |
 
 ### Support, escalation, and case studies
 
