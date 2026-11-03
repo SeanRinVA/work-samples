@@ -1,0 +1,11 @@
+id,company,title,status,date_reviewed,notes
+APP-001,Northwind Health,Systems Administrator,Apply,2026-03-12,Core stack match
+APP-002,Contoso Logistics,Senior Infrastructure Engineer,Stretch,2026-03-12,One tool gap; named in fit note
+APP-003,Fabrikam Retail,Cloud Architect,Pass,2026-03-13,Primary platform outside verified work
+APP-004,Adventure Works,IT Manager,Apply,2026-03-14,Ownership story aligns
+APP-005,Litware Inc,Endpoint Engineer,Pass,2026-03-14,Already applied last quarter
+APP-006,Tailspin Toys,Backup Administrator,Stretch,2026-03-15,Configuration owned; architecture not
+APP-007,Wide World Importers,Systems Engineer,Applied,2026-03-16,Submitted after gate
+APP-008,Graphic Design Institute,Security Analyst,Pass,2026-03-17,Clearance required; not pursued
+APP-009,The Phone Company,Desktop Support Lead,Stretch,2026-03-18,Acceptable if needed
+APP-010,Southridge Video,Database Developer,Pass,2026-03-18,Developer-style work outside boundary
